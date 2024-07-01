@@ -1,12 +1,16 @@
 #include <SDL2/SDL.h>
 
 #include "STL_Handler.h"
+#include "Scene.h"
+#include "Rasterizer.h"
 
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
 
 int main(int argc, char* argv[]) {
+    int w = 800, h = 600;
+
     /* Initializes SDL Stuff */
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
@@ -17,7 +21,7 @@ int main(int argc, char* argv[]) {
     SDL_Window* window = SDL_CreateWindow("Rasterizer",
                                           SDL_WINDOWPOS_UNDEFINED,
                                           SDL_WINDOWPOS_UNDEFINED,
-                                          800, 600,
+                                          w, h,
                                           SDL_WINDOW_SHOWN);
     if (!window) {
         SDL_Log("Could not create window: %s", SDL_GetError());
@@ -33,6 +37,14 @@ int main(int argc, char* argv[]) {
         SDL_Quit();
         return 1;
     }
+    
+    // Sets up framebuffer and necessary SDL structures for pixel rendering
+    Uint32* framebuffer;
+    framebuffer = malloc(w*h*sizeof(framebuffer));
+    if (framebuffer == NULL)
+        puts("Framebuffer allocation failure");
+    SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, w, h);
+    SDL_PixelFormat *format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
 
 
     // Load models into memory
@@ -77,13 +89,11 @@ int main(int argc, char* argv[]) {
         // Apply shading onto fragments
         // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
 
-        // Render framebuffer to screne
-        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
-
-
         // Clear the screen with a white background
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White background
         SDL_RenderClear(renderer);
+        SDL_UpdateTexture(texture, NULL, framebuffer, w * sizeof(Uint32));
+        SDL_RenderCopy(renderer, texture, NULL, NULL);
 
         // Update screen
         SDL_RenderPresent(renderer);
@@ -93,6 +103,9 @@ int main(int argc, char* argv[]) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    SDL_DestroyTexture(texture);
+    SDL_FreeFormat(format);
+    free(framebuffer);
     destroy_model_struct(m);
 
     return 0;

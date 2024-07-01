@@ -4,16 +4,16 @@
 #define B4C99C2D_6485_49E3_BD9F_9832BAA92C80
 
 typedef struct {
-    Camera* camera;
-    Model* models;
-    int num_models;
-} Scene;
-
-typedef struct {
     Vertex3D point;
     double rotation[3];
     double fov;
 } Camera;
+
+typedef struct {
+    Camera* camera;
+    Model* models;
+    int num_models;
+} Scene;
 
 typedef struct {
     int w, h;
