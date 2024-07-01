@@ -51,10 +51,15 @@ int main(int argc, char* argv[]) {
     FILE* file = fopen("assets/20mm_cube.stl", "r");
     Model* m = build_model_struct(file);
     fclose(file);
+
+    // List of pointers to each model, will get free'd when we call destroy_scene_recursively()
+    Model** models = malloc(sizeof(Model*));
     
 
     // Construct a scene from these
-    // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+    Vertex3D* p = build_vertex3D_struct(0, 0, 0);
+    Camera* camera = build_camera_struct(p, 0, 0, 0, 60);
+    Scene* scene = build_scene_struct(camera, models, 1);
 
     /* Main loop */
     SDL_Event e;
