@@ -76,7 +76,10 @@ int main(int argc, char* argv[]) {
         // Update scene
         // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
 
-        // Transform into Camera space
+        // Transform into World and then into Camera space
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
+        // Use prospective projection
         // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
 
         // Perform clipping
@@ -111,7 +114,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyTexture(texture);
     SDL_FreeFormat(format);
     free(framebuffer);
-    destroy_model_struct(m);
+    destroy_scene_recursively(scene);
 
     return 0;
 }
