@@ -14,22 +14,27 @@ typedef struct {
 
 typedef struct {
     int indices[3];  // Indices of the three vertices that form the triangle
+    double normal[3]; // Normal
 } Triangle;
 
 typedef struct {
-    Vertex3D* vertices;  // Array of vertices
+    Vertex3D** vertices;  // Array of vertices
     size_t vertex_count;  // Number of vertices
-    Triangle* triangles;  // Array of triangles
+    Triangle** triangles;  // Array of triangles
     size_t triangle_count;  // Number of triangles
 } Model;
 
-Triangle* build_triangle_struct(int a, int b, int c);
+Triangle* build_triangle_struct_no_norm(int a, int b, int c);
+Triangle* build_triangle_struct(int a, int b, int c, double n1, double n2, double n3);
 void destroy_triangle_struct(Triangle* object);
 
-Vertex3D* build_vertex_struct(double x, double y, double z);
-void destroy_vertex_struct(Vertex3D* object);
+Vertex3D* build_vertex3D_struct(double x, double y, double z);
+void destroy_vertex3D_struct(Vertex3D* object);
 
-Model* build_model_struct(const FILE* file);
+Vertex2D* build_vertex2D_struct(double x, double y);
+void destroy_vertex2D_struct(Vertex2D* object);
+
+Model* build_model_struct(FILE* file);
 void destroy_model_struct(Model* object);
 
 
