@@ -36,7 +36,10 @@ int main(int argc, char* argv[]) {
 
 
     // Load models into memory
-    // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+    FILE* file = fopen("assets/20mm_cube.stl", "r");
+    Model* m = build_model_struct(file);
+    fclose(file);
+    
 
     // Construct a scene from these
     // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
@@ -90,6 +93,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    destroy_model_struct(m);
 
     return 0;
 }

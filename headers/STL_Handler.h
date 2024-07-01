@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 #ifndef E832129C_657D_4EED_9503_7E694ADC658B
 #define E832129C_657D_4EED_9503_7E694ADC658B
