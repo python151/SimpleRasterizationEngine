@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
 
+#include "STL_Handler.h"
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -33,9 +35,11 @@ int main(int argc, char* argv[]) {
     }
 
 
-    /* Initiates graphics pipeline */
+    // Load models into memory
+    // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
 
-    
+    // Construct a scene from these
+    // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
 
     /* Main loop */
     SDL_Event e;
@@ -48,6 +52,31 @@ int main(int argc, char* argv[]) {
                 quit = true;
             }
         }
+
+        // Update scene
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
+        // Transform into Camera space
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
+        // Perform clipping
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
+        // Apply vertex shading
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
+        // Rasterize into fragments
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
+        // Apply textures onto fragments
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
+        // Apply shading onto fragments
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
+        // Render framebuffer to screne
+        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+
 
         // Clear the screen with a white background
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White background
