@@ -1,18 +1,18 @@
 #include "Scene.h"
 
-Scene* build_scene_struct(Camera* camera, Model** models, size_t num_models) {
+Scene* build_scene_struct(Camera* camera, GameObject** objects, size_t num_models) {
     Scene* scene = malloc(sizeof(Scene));
     scene->camera = camera;
-    scene->models = models;
+    scene->objects = objects;
     scene->num_models = num_models;
     return scene;
 }
 void destroy_scene_recursively(Scene* scene) {
     destroy_camera_struct(scene->camera);
     for (int m = 0; m < scene->num_models; m++) {
-        destroy_model_struct(scene->models[m]);
+        destroy_gameobject_struct(scene->objects[m]);
     }
-    free(scene->models);
+    free(scene->objects);
     free(scene);
 }
 
@@ -54,5 +54,17 @@ void destoy_image_struct(Image2D* object) {
     destroy_z_buffer(object->z_buffer);
     free(object->triangles);
     free(object->vertices);
+    free(object);
+}
+
+GameObject* build_gameobject(Vertex3D* point, Model* model) {
+    GameObject* object = malloc(sizeof(GameObject));
+    object->location = point;
+    object->model = model;
+    return object;
+}
+void destroy_gameobject_struct(GameObject* object) {
+    destroy_model_struct(object->model);
+    destroy_vertex3D_struct(object->location);
     free(object);
 }

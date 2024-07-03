@@ -1,134 +1,175 @@
-==60014== Memcheck, a memory error detector
-==60014== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==60014== Using Valgrind-3.22.0-bd4db67b1d-20231031 and LibVEX; rerun with -h for copyright info
-==60014== Command: ./myprogram
-==60014== Parent PID: 10451
-==60014== 
---60014-- 
---60014-- Valgrind options:
---60014--    --leak-check=full
---60014--    --show-leak-kinds=all
---60014--    --track-origins=yes
---60014--    --verbose
---60014--    --log-file=valgrind-out.txt
---60014-- Contents of /proc/version:
---60014--   Linux version 6.8.0-35-generic (buildd@lcy02-amd64-020) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.2.0-23ubuntu4) 13.2.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #35-Ubuntu SMP PREEMPT_DYNAMIC Mon May 20 15:51:52 UTC 2024
---60014-- 
---60014-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
---60014-- Page sizes: currently 4096, max supported 4096
---60014-- Valgrind library directory: /usr/libexec/valgrind
---60014-- Reading syms from /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram
---60014-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
---60014--   Considering /usr/lib/debug/.build-id/3e/81740f816ee1521a87e439c16ebfde46f147a5.debug ..
---60014--   .. build-id is valid
---60014-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
---60014--    object doesn't have a dynamic symbol table
---60014-- Scheduler: using generic scheduler lock implementation.
---60014-- Reading suppressions file: /usr/libexec/valgrind/default.supp
-==60014== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-60014-by-emily-tier1-on-???
-==60014== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-60014-by-emily-tier1-on-???
-==60014== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-60014-by-emily-tier1-on-???
-==60014== 
-==60014== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==60014== don't want to do, unless you know exactly what you're doing,
-==60014== or are doing some strange experiment):
-==60014==   /usr/bin/vgdb --pid=60014 ...command...
-==60014== 
-==60014== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==60014==   /path/to/gdb ./myprogram
-==60014== and then give GDB the following command
-==60014==   target remote | /usr/bin/vgdb --pid=60014
-==60014== --pid is optional if only one valgrind process is running
-==60014== 
---60014-- REDIR: 0x4028b00 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c2e1a (???)
---60014-- REDIR: 0x40272b0 (ld-linux-x86-64.so.2:index) redirected to 0x580c2e34 (???)
---60014-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
---60014-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
-==60014== WARNING: new redirection conflicts with existing -- ignoring it
---60014--     old: 0x04028b00 (strlen              ) R-> (0000.0) 0x580c2e1a ???
---60014--     new: 0x04028b00 (strlen              ) R-> (2007.0) 0x0484f340 strlen
---60014-- REDIR: 0x40274e0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4850460 (strcmp)
---60014-- REDIR: 0x4026910 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853cd0 (mempcpy)
---60014-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
---60014--   Considering /usr/lib/debug/.build-id/08/134323d00289185684a4cd177d202f39c2a5f3.debug ..
---60014--   .. build-id is valid
---60014-- REDIR: 0x4028ca0 (ld-linux-x86-64.so.2:strncmp) redirected to 0x484fc90 (strncmp)
---60014-- REDIR: 0x4921040 (libc.so.6:strnlen) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x49210d0 (libc.so.6:strpbrk) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491f190 (libc.so.6:strcmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x49383b0 (libc.so.6:wcsnlen) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491e280 (libc.so.6:memset) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4937b20 (libc.so.6:wcslen) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x49a33c0 (libc.so.6:__memcpy_chk) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491e1f0 (libc.so.6:memrchr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4938350 (libc.so.6:wcsncpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491d710 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x49368e0 (libc.so.6:wcschr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491f080 (libc.so.6:index) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4921100 (libc.so.6:rindex) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4936990 (libc.so.6:wcscmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491e4a0 (libc.so.6:stpncpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4944eb0 (libc.so.6:wmemchr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4920ee0 (libc.so.6:strncmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491e500 (libc.so.6:strcasecmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4920300 (libc.so.6:strcspn) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x49378f0 (libc.so.6:wcscpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491f010 (libc.so.6:strcat) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4920de0 (libc.so.6:strncasecmp_l) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491f100 (libc.so.6:strchrnul) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491d620 (libc.so.6:bcmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4920290 (libc.so.6:strcpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491e5a0 (libc.so.6:strcasecmp_l) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4920cb0 (libc.so.6:strlen) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4920f80 (libc.so.6:strncpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4944f30 (libc.so.6:wmemcmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x49a34e0 (libc.so.6:__memmove_chk) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
-==60014== WARNING: new redirection conflicts with existing -- ignoring it
---60014--     old: 0x049f49d0 (__memcpy_chk_avx_una) R-> (2030.0) 0x04853dd0 __memcpy_chk
---60014--     new: 0x049f49d0 (__memcpy_chk_avx_una) R-> (2024.0) 0x04853740 __memmove_chk
---60014-- REDIR: 0x491e430 (libc.so.6:stpcpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491dfb0 (libc.so.6:memmove) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
-==60014== Preferring higher priority redirection:
---60014--     old: 0x049f4a00 (__memcpy_avx_unalign) R-> (2018.0) 0x04851580 __memcpy_avx_unaligned_erms
---60014--     new: 0x049f4a00 (__memcpy_avx_unalign) R-> (2018.1) 0x04852d60 memmove
---60014-- REDIR: 0x491d5a0 (libc.so.6:memchr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x49212d0 (libc.so.6:strspn) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x491e0d0 (libc.so.6:mempcpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4920d40 (libc.so.6:strncasecmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x4921b90 (libc.so.6:strstr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
---60014-- REDIR: 0x49f95f0 (libc.so.6:__strrchr_avx2) redirected to 0x484ed20 (rindex)
---60014-- REDIR: 0x49f7740 (libc.so.6:__strlen_avx2) redirected to 0x484f220 (strlen)
---60014-- REDIR: 0x4919640 (libc.so.6:malloc) redirected to 0x48467b0 (malloc)
---60014-- REDIR: 0x49f6da0 (libc.so.6:__strchrnul_avx2) redirected to 0x48537b0 (strchrnul)
---60014-- REDIR: 0x49f4a00 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4852d60 (memmove)
---60014-- REDIR: 0x49f49c0 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x48538d0 (mempcpy)
---60014-- REDIR: 0x49f6b60 (libc.so.6:__strchr_avx2) redirected to 0x484ef00 (index)
---60014-- REDIR: 0x49f4000 (libc.so.6:__memchr_avx2) redirected to 0x48504e0 (memchr)
---60014-- REDIR: 0x4933e10 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4853e40 (strstr)
---60014-- REDIR: 0x491a090 (libc.so.6:realloc) redirected to 0x484db00 (realloc)
---60014-- REDIR: 0x4919d20 (libc.so.6:free) redirected to 0x4849820 (free)
-==60014== Invalid free() / delete / delete[] / realloc()
-==60014==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==60014==    by 0x109366: destroy_scene_recursively (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
-==60014==    by 0x10A28A: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
-==60014==  Address 0x1ffefffc88 is on thread 1's stack
-==60014==  in frame #2, created by main (???:)
-==60014== 
-==60014== 
-==60014== HEAP SUMMARY:
-==60014==     in use at exit: 0 bytes in 0 blocks
-==60014==   total heap usage: 40 allocs, 41 frees, 7,640 bytes allocated
-==60014== 
-==60014== All heap blocks were freed -- no leaks are possible
-==60014== 
-==60014== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
-==60014== 
-==60014== 1 errors in context 1 of 1:
-==60014== Invalid free() / delete / delete[] / realloc()
-==60014==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==60014==    by 0x109366: destroy_scene_recursively (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
-==60014==    by 0x10A28A: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
-==60014==  Address 0x1ffefffc88 is on thread 1's stack
-==60014==  in frame #2, created by main (???:)
-==60014== 
-==60014== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==136387== Memcheck, a memory error detector
+==136387== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==136387== Using Valgrind-3.22.0-bd4db67b1d-20231031 and LibVEX; rerun with -h for copyright info
+==136387== Command: ./myprogram
+==136387== Parent PID: 10451
+==136387== 
+--136387-- 
+--136387-- Valgrind options:
+--136387--    --leak-check=full
+--136387--    --show-leak-kinds=all
+--136387--    --track-origins=yes
+--136387--    --verbose
+--136387--    --log-file=valgrind-out.txt
+--136387-- Contents of /proc/version:
+--136387--   Linux version 6.8.0-35-generic (buildd@lcy02-amd64-020) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.2.0-23ubuntu4) 13.2.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #35-Ubuntu SMP PREEMPT_DYNAMIC Mon May 20 15:51:52 UTC 2024
+--136387-- 
+--136387-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
+--136387-- Page sizes: currently 4096, max supported 4096
+--136387-- Valgrind library directory: /usr/libexec/valgrind
+--136387-- Reading syms from /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram
+--136387-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+--136387--   Considering /usr/lib/debug/.build-id/3e/81740f816ee1521a87e439c16ebfde46f147a5.debug ..
+--136387--   .. build-id is valid
+--136387-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
+--136387--    object doesn't have a dynamic symbol table
+--136387-- Scheduler: using generic scheduler lock implementation.
+--136387-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==136387== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-136387-by-emily-tier1-on-???
+==136387== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-136387-by-emily-tier1-on-???
+==136387== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-136387-by-emily-tier1-on-???
+==136387== 
+==136387== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==136387== don't want to do, unless you know exactly what you're doing,
+==136387== or are doing some strange experiment):
+==136387==   /usr/bin/vgdb --pid=136387 ...command...
+==136387== 
+==136387== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==136387==   /path/to/gdb ./myprogram
+==136387== and then give GDB the following command
+==136387==   target remote | /usr/bin/vgdb --pid=136387
+==136387== --pid is optional if only one valgrind process is running
+==136387== 
+--136387-- REDIR: 0x4028b00 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c2e1a (???)
+--136387-- REDIR: 0x40272b0 (ld-linux-x86-64.so.2:index) redirected to 0x580c2e34 (???)
+--136387-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+--136387-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+==136387== WARNING: new redirection conflicts with existing -- ignoring it
+--136387--     old: 0x04028b00 (strlen              ) R-> (0000.0) 0x580c2e1a ???
+--136387--     new: 0x04028b00 (strlen              ) R-> (2007.0) 0x0484f340 strlen
+--136387-- REDIR: 0x40274e0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4850460 (strcmp)
+--136387-- REDIR: 0x4026910 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853cd0 (mempcpy)
+--136387-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
+--136387--   Considering /usr/lib/debug/.build-id/08/134323d00289185684a4cd177d202f39c2a5f3.debug ..
+--136387--   .. build-id is valid
+--136387-- REDIR: 0x4028ca0 (ld-linux-x86-64.so.2:strncmp) redirected to 0x484fc90 (strncmp)
+--136387-- REDIR: 0x4921040 (libc.so.6:strnlen) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x49210d0 (libc.so.6:strpbrk) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491f190 (libc.so.6:strcmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x49383b0 (libc.so.6:wcsnlen) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491e280 (libc.so.6:memset) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4937b20 (libc.so.6:wcslen) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x49a33c0 (libc.so.6:__memcpy_chk) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491e1f0 (libc.so.6:memrchr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4938350 (libc.so.6:wcsncpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491d710 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x49368e0 (libc.so.6:wcschr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491f080 (libc.so.6:index) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4921100 (libc.so.6:rindex) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4936990 (libc.so.6:wcscmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491e4a0 (libc.so.6:stpncpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4944eb0 (libc.so.6:wmemchr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4920ee0 (libc.so.6:strncmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491e500 (libc.so.6:strcasecmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4920300 (libc.so.6:strcspn) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x49378f0 (libc.so.6:wcscpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491f010 (libc.so.6:strcat) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4920de0 (libc.so.6:strncasecmp_l) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491f100 (libc.so.6:strchrnul) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491d620 (libc.so.6:bcmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4920290 (libc.so.6:strcpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491e5a0 (libc.so.6:strcasecmp_l) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4920cb0 (libc.so.6:strlen) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4920f80 (libc.so.6:strncpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4944f30 (libc.so.6:wmemcmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x49a34e0 (libc.so.6:__memmove_chk) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+==136387== WARNING: new redirection conflicts with existing -- ignoring it
+--136387--     old: 0x049f49d0 (__memcpy_chk_avx_una) R-> (2030.0) 0x04853dd0 __memcpy_chk
+--136387--     new: 0x049f49d0 (__memcpy_chk_avx_una) R-> (2024.0) 0x04853740 __memmove_chk
+--136387-- REDIR: 0x491e430 (libc.so.6:stpcpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491dfb0 (libc.so.6:memmove) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+==136387== Preferring higher priority redirection:
+--136387--     old: 0x049f4a00 (__memcpy_avx_unalign) R-> (2018.0) 0x04851580 __memcpy_avx_unaligned_erms
+--136387--     new: 0x049f4a00 (__memcpy_avx_unalign) R-> (2018.1) 0x04852d60 memmove
+--136387-- REDIR: 0x491d5a0 (libc.so.6:memchr) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x49212d0 (libc.so.6:strspn) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x491e0d0 (libc.so.6:mempcpy) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x4920d40 (libc.so.6:strncasecmp) redirected to 0x483d1c0 (_vgnU_ifunc_wrapper)
+--136387-- REDIR: 0x49f95f0 (libc.so.6:__strrchr_avx2) redirected to 0x484ed20 (rindex)
+--136387-- REDIR: 0x4919640 (libc.so.6:malloc) redirected to 0x48467b0 (malloc)
+==136387== Invalid write of size 8
+==136387==    at 0x1097AD: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==  Address 0x4a811a0 is 0 bytes after a block of size 16 alloc'd
+==136387==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==136387==    by 0x109774: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387== 
+==136387== Invalid write of size 8
+==136387==    at 0x1097C1: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==  Address 0x4a811a8 is 8 bytes after a block of size 16 alloc'd
+==136387==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==136387==    by 0x109774: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387== 
+--136387-- REDIR: 0x49f7740 (libc.so.6:__strlen_avx2) redirected to 0x484f220 (strlen)
+--136387-- REDIR: 0x49f6da0 (libc.so.6:__strchrnul_avx2) redirected to 0x48537b0 (strchrnul)
+--136387-- REDIR: 0x49f4a00 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4852d60 (memmove)
+--136387-- REDIR: 0x49f49c0 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x48538d0 (mempcpy)
+==136387== Invalid read of size 8
+==136387==    at 0x109622: PrintMatrix (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==    by 0x1097F5: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==  Address 0x4a811a0 is 0 bytes after a block of size 16 alloc'd
+==136387==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==136387==    by 0x109774: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387== 
+==136387== Invalid read of size 8
+==136387==    at 0x109480: matmul_inplace (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==    by 0x109306: matmul (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==    by 0x10983C: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==  Address 0x4a811a0 is 0 bytes after a block of size 16 alloc'd
+==136387==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==136387==    by 0x109774: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387== 
+--136387-- REDIR: 0x4919d20 (libc.so.6:free) redirected to 0x4849820 (free)
+==136387== 
+==136387== HEAP SUMMARY:
+==136387==     in use at exit: 0 bytes in 0 blocks
+==136387==   total heap usage: 10 allocs, 10 frees, 1,192 bytes allocated
+==136387== 
+==136387== All heap blocks were freed -- no leaks are possible
+==136387== 
+==136387== ERROR SUMMARY: 6 errors from 4 contexts (suppressed: 0 from 0)
+==136387== 
+==136387== 1 errors in context 1 of 4:
+==136387== Invalid write of size 8
+==136387==    at 0x1097C1: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==  Address 0x4a811a8 is 8 bytes after a block of size 16 alloc'd
+==136387==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==136387==    by 0x109774: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387== 
+==136387== 
+==136387== 1 errors in context 2 of 4:
+==136387== Invalid write of size 8
+==136387==    at 0x1097AD: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==  Address 0x4a811a0 is 0 bytes after a block of size 16 alloc'd
+==136387==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==136387==    by 0x109774: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387== 
+==136387== 
+==136387== 2 errors in context 3 of 4:
+==136387== Invalid read of size 8
+==136387==    at 0x109480: matmul_inplace (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==    by 0x109306: matmul (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==    by 0x10983C: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==  Address 0x4a811a0 is 0 bytes after a block of size 16 alloc'd
+==136387==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==136387==    by 0x109774: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387== 
+==136387== 
+==136387== 2 errors in context 4 of 4:
+==136387== Invalid read of size 8
+==136387==    at 0x109622: PrintMatrix (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==    by 0x1097F5: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387==  Address 0x4a811a0 is 0 bytes after a block of size 16 alloc'd
+==136387==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==136387==    by 0x109774: main (in /home/emily-tier1/Projects/SimpleRasterizationEngine/tests/myprogram)
+==136387== 
+==136387== ERROR SUMMARY: 6 errors from 4 contexts (suppressed: 0 from 0)

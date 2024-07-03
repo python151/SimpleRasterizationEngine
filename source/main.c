@@ -51,15 +51,15 @@ int main(int argc, char* argv[]) {
     FILE* file = fopen("assets/20mm_cube.stl", "r");
     Model* m = build_model_struct(file);
     fclose(file);
+    GameObject* object = build_gameobject(build_vertex3D_struct(0, 0, 0), m);
 
-    // List of pointers to each model, will get free'd when we call destroy_scene_recursively()
-    Model** models = malloc(sizeof(Model*));
-    
+    // List of pointers to each GameObject, will get free'd when we call destroy_scene_recursively()
+    GameObject** objects = malloc(sizeof(GameObject*));
 
     // Construct a scene from these
     Vertex3D* p = build_vertex3D_struct(0, 0, 0);
     Camera* camera = build_camera_struct(p, 0, 0, 0, 60);
-    Scene* scene = build_scene_struct(camera, models, 1);
+    Scene* scene = build_scene_struct(camera, objects, 1);
 
     /* Main loop */
     SDL_Event e;
@@ -76,11 +76,14 @@ int main(int argc, char* argv[]) {
         // Update scene
         // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
 
-        // Transform into World and then into Camera space
-        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
-
-        // Use prospective projection
-        // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+        // Construct projection matrix
+        // For each model
+            // Find total delta (translation, rotation, etc. to go from model space into world space and then with respect to the camera)
+            // Construct transformation matrix
+            // Apply projection matrix onto transformation matrix
+            // For each vertex
+                // Apply projection/transformation matrix onto vertex to map (x, y, z) of model to (x, y) of screen
+                // Write to image2d buffer
 
         // Perform clipping
         // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
