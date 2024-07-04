@@ -45,13 +45,22 @@ Image2D* build_empty_image_struct(size_t triangle_count, size_t vertex_count, in
     Image2D* image = malloc(sizeof(Image2D));
     image->triangle_count = triangle_count;
     image->vertex_count = vertex_count;
-    image->triangles = malloc(triangle_count*sizeof(Triangle));
-    image->vertices = malloc(vertex_count*sizeof(Vertex2D));
+    printf("T count is %zu and V count is %zu\n", image->triangle_count, image->vertex_count);
+    image->triangles = malloc(triangle_count*sizeof(Triangle*));
+    image->vertices = malloc(vertex_count*sizeof(Vertex2D*));
+    if (image->vertices == NULL)
+        puts("ITS ALL A LIE");
+    else   
+        puts("ITS ALL TRUE!");
     image->z_buffer = create_empty_z_buffer(h, w);
     return image;
 }
 void destoy_image_struct(Image2D* object) {
     destroy_z_buffer(object->z_buffer);
+    for (int t = 0; t < object->triangle_count; t++)
+        destroy_triangle_struct(object->triangles[t]);
+    for (int v = 0; v < object->vertex_count; v++)
+        destroy_vertex2D_struct(object->vertices[v]);
     free(object->triangles);
     free(object->vertices);
     free(object);
@@ -61,6 +70,9 @@ GameObject* build_gameobject(Vertex3D* point, Model* model) {
     GameObject* object = malloc(sizeof(GameObject));
     object->location = point;
     object->model = model;
+    object->rotation[0] = 0;
+    object->rotation[1] = 0;
+    object->rotation[2] = 0;
     return object;
 }
 void destroy_gameobject_struct(GameObject* object) {

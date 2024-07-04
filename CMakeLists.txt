@@ -18,7 +18,9 @@ pkg_check_modules(SDL2 REQUIRED sdl2)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 # Add the executable
-add_executable(MyProject source/main.c source/STL_Handler.c source/Scene.c source/Linear_Algebra_Utils.c)
+add_executable(MyProject source/main.c source/STL_Handler.c source/Scene.c source/Linear_Algebra_Utils.c source/Projections.c source/Transformation_Utils.c)
 target_link_libraries(MyProject ${SDL2_LIBRARIES})
+target_link_libraries(MyProject m)
+
 
 

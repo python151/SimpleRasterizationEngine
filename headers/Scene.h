@@ -6,6 +6,7 @@
 
 typedef struct {
     Vertex3D* location;
+    double rotation[3];
     Model* model;
 } GameObject;
 
@@ -27,9 +28,9 @@ typedef struct {
 } ZBuffer;
 
 typedef struct {
-    Vertex2D* vertices;  // Array of vertices
+    Vertex2D** vertices;  // Array of vertices
     size_t vertex_count;  // Number of vertices
-    Triangle* triangles;  // Array of triangles
+    Triangle** triangles;  // Array of triangles
     size_t triangle_count;  // Number of triangles
     ZBuffer* z_buffer;
 } Image2D;
