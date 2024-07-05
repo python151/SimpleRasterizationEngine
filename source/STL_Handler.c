@@ -92,17 +92,15 @@ void build_triangle(FILE* file, char line_buffer[250], Model* current_model) {
     int indices[3] = {-1, -1, -1};
     for (int i = 0; i < current_model->vertex_count; i++) {
         Vertex3D v = *current_model->vertices[i];
-        if (vertex_3d_raw_isequal(v, x1, y1, z1))
+        if (vertex_3d_raw_isequal(v, x1, y1, z1)) {
             indices[0] = i;
-        else if (vertex_3d_raw_isequal(v, x2, y2, z2))
+        } else if (vertex_3d_raw_isequal(v, x2, y2, z2)) {
             indices[1] = i;
-        else if (vertex_3d_raw_isequal(v, x3, y3, z3))
+        } else if (vertex_3d_raw_isequal(v, x3, y3, z3)) {
             indices[2] = i;
+        }
     }
     if (indices[0] == -1) {
-            printf("point1: %lf, %lf, %lf\n", x1, y1, z1);
-    printf("point2: %lf, %lf, %lf\n", x2, y2, z2);
-    printf("point3: %lf, %lf, %lf\n", x3, y3, z3);
         Vertex3D* v = build_vertex3D_struct(x1, y1, z1);
         current_model->vertex_count++;
         current_model->vertices = realloc(current_model->vertices, current_model->vertex_count*sizeof(Vertex3D*));
@@ -110,9 +108,6 @@ void build_triangle(FILE* file, char line_buffer[250], Model* current_model) {
         indices[0] = current_model->vertex_count-1;
     }
     if (indices[1] == -1) {
-            printf("point1: %lf, %lf, %lf\n", x1, y1, z1);
-    printf("point2: %lf, %lf, %lf\n", x2, y2, z2);
-    printf("point3: %lf, %lf, %lf\n", x3, y3, z3);
         Vertex3D* v = build_vertex3D_struct(x2, y2, z2);
         current_model->vertex_count++;
         current_model->vertices = realloc(current_model->vertices, current_model->vertex_count*sizeof(Vertex3D*));
@@ -120,9 +115,6 @@ void build_triangle(FILE* file, char line_buffer[250], Model* current_model) {
         indices[1] = current_model->vertex_count-1;
     }
     if (indices[2] == -1) {
-            printf("point1: %lf, %lf, %lf\n", x1, y1, z1);
-    printf("point2: %lf, %lf, %lf\n", x2, y2, z2);
-    printf("point3: %lf, %lf, %lf\n", x3, y3, z3);
         Vertex3D* v = build_vertex3D_struct(x3, y3, z3);
         current_model->vertex_count++;
         current_model->vertices = realloc(current_model->vertices, current_model->vertex_count*sizeof(Vertex3D*));

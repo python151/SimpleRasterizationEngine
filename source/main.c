@@ -54,7 +54,10 @@ int main(int argc, char* argv[]) {
     FILE* file = fopen("assets/20mm_cube.stl", "r");
     Model* m = build_model_struct(file);
     fclose(file);
-    GameObject* object = build_gameobject(build_vertex3D_struct(10, 10, 0), m);
+    GameObject* object = build_gameobject(build_vertex3D_struct(0, 0, 0), m);
+    object->rotation[0] = 0;//3.14/10;//3.14/6;
+    object->rotation[1] = 0;//3.14/6;
+    object->rotation[2] = 0;//.3;//3.14/6;
 
     // List of pointers to each GameObject, will get free'd when we call destroy_scene_recursively()
     GameObject** objects = malloc(sizeof(GameObject*));
@@ -62,13 +65,18 @@ int main(int argc, char* argv[]) {
 
     // Construct a scene from these
     puts("Building scene");
-    Vertex3D* p = build_vertex3D_struct(15, 10, -150);
-    Camera* camera = build_camera_struct(p, 0, 0, 0, 60);
+    Vertex3D* p = build_vertex3D_struct(10, 30, -130);
+    Camera* camera = build_camera_struct(p, -.3, 0, 0, 60);
     Scene* scene = build_scene_struct(camera, objects, 1);
     puts("Building scene 1");
     Image2D* image_buffer = construct_image_buffer(scene, w, h);
     puts("Building scene 2");
 
+    double camera_theta = 0;
+
+    Uint32 lastTime = 0, currentTime;
+    float deltaTime;
+    
     /* Main loop */
     SDL_Event e;
     bool quit = false;
@@ -81,25 +89,38 @@ int main(int argc, char* argv[]) {
             }
         }
 
+        // Calculate delta time
+        currentTime = SDL_GetTicks();
+        deltaTime = (currentTime - lastTime) / 1000.0f;  // Convert milliseconds to seconds
+        lastTime = currentTime;
+
         // Update scene
         // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
+        //object->rotation[1] += .05;
+        //camera->point->x = 100*cos(camera_theta);
+        //camera->point->z = 100*sin(camera_theta);
+        //camera->rotation[1] = camera_theta;
+        //camera_theta += 3.14/40 * deltaTime;
+        //printf("cam: %.2f\n", camera_theta);
 
         Matrix* projection_matrix = generate_perspective_projection_matrix(60, w, h);
         size_t current_vertex = 0;
         for (int i = 0; i < scene->num_models; i++) {
+            
             // Find total delta (translation, rotation, etc. to go from model space into world space and then with respect to the camera)
-            double dx = 2*scene->objects[i]->location->x - scene->camera->point->x;
-            double dy = 2*scene->objects[i]->location->y - scene->camera->point->y;
-            double dz = 2*scene->objects[i]->location->y - scene->camera->point->z;
-            double theta_x = scene->objects[i]->rotation[0] - scene->camera->rotation[0];
-            double theta_y = scene->objects[i]->rotation[1] - scene->camera->rotation[1];
-            double theta_z = scene->objects[i]->rotation[2] - scene->camera->rotation[2];
+            double dx = -scene->camera->point->x;
+            double dy = -scene->camera->point->y;
+            double dz = -scene->camera->point->z;
             // Construct transformation matrix
-            Matrix* translation_matrix = construct_translation_matrix(dx, dy, dz);
-            Matrix* rotation_matrix = construct_rotation_matrix(theta_x, theta_y, theta_z);
-            Matrix* TR = matmul(*translation_matrix, *rotation_matrix);
+            Matrix* translation_matrix_2 = construct_translation_matrix(scene->objects[i]->location->x, scene->objects[i]->location->y, scene->objects[i]->location->z);
+            Matrix* translation_matrix_1 = construct_translation_matrix(dx, dy, dz);
+            Matrix* rotation_matrix_2 = construct_rotation_matrix(-scene->camera->rotation[0], -scene->camera->rotation[1], -scene->camera->rotation[2]);
+            Matrix* rotation_matrix_1 = construct_rotation_matrix(scene->objects[i]->rotation[0], scene->objects[i]->rotation[1], scene->objects[i]->rotation[2]);
             // Apply projection matrix onto transformation matrix
-            Matrix* augmentation_matrix = matmul(*projection_matrix, *TR);
+            Matrix* RT = matmul(*rotation_matrix_1, *translation_matrix_2);
+            Matrix* TRT = matmul(*translation_matrix_1, *RT);
+            Matrix* RTRT = matmul(*rotation_matrix_2, *TRT);
+            Matrix* augmentation_matrix = matmul(*projection_matrix, *RTRT);
             for (int v = 0; v < scene->objects[i]->model->vertex_count; v++) {
                 // Apply augmentation matrix onto vertex to map (x, y, z) of model to (x, y) of screen
                 Matrix* point = construct_affine_template_of_coordinate(*scene->objects[i]->model->vertices[v]);
@@ -118,10 +139,14 @@ int main(int argc, char* argv[]) {
                 destroy_matrix(final);
             }
 
-            // Cleaning u
-            destroy_matrix(translation_matrix);
-            destroy_matrix(rotation_matrix);
-            destroy_matrix(TR);
+            // Cleaning up
+            destroy_matrix(translation_matrix_1);
+            destroy_matrix(translation_matrix_2);
+            destroy_matrix(rotation_matrix_1);
+            destroy_matrix(rotation_matrix_2);
+            destroy_matrix(RT);
+            destroy_matrix(TRT);
+            destroy_matrix(RTRT);
             destroy_matrix(augmentation_matrix);
         }
         destroy_matrix(projection_matrix);

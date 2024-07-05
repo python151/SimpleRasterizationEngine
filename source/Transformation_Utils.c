@@ -1,4 +1,5 @@
 #include "Transformation_Utils.h"
+#include <math.h>
 
 Matrix* construct_translation_matrix(double dx, double dy, double dz) {
     size_t* shape = malloc(2*sizeof(size_t));
@@ -29,7 +30,33 @@ Matrix* construct_translation_matrix(double dx, double dy, double dz) {
 }
 Matrix* construct_rotation_matrix(double theta_x, double theta_y, double theta_z) {
     // TODO: IMPLEMENT THIS, THIS IS JUST A PLACEHOLDER
-    return construct_translation_matrix(0, 0, 0);
+    Matrix* mat_x =  construct_translation_matrix(0, 0, 0);
+    mat_x->values[5] = cos(theta_x);
+    mat_x->values[6] = sin(theta_x);
+    mat_x->values[9] = -sin(theta_x);
+    mat_x->values[10] = cos(theta_x);
+
+    Matrix* mat_y =  construct_translation_matrix(0, 0, 0);
+    mat_y->values[0] = cos(theta_y);
+    mat_y->values[2] = -sin(theta_y);
+    mat_y->values[8] = sin(theta_y);
+    mat_y->values[10] = cos(theta_y);
+
+    Matrix* mat_z =  construct_translation_matrix(0, 0, 0);
+    mat_z->values[0] = cos(theta_z);
+    mat_z->values[1] = sin(theta_z);
+    mat_z->values[4] = -sin(theta_z);
+    mat_z->values[5] = cos(theta_z);
+
+    Matrix* YZ = matmul(*mat_y, *mat_z);
+    Matrix* XYZ = matmul(*mat_x, *YZ);
+
+    destroy_matrix(mat_x);
+    destroy_matrix(mat_y);
+    destroy_matrix(mat_z);
+    destroy_matrix(YZ);
+
+    return XYZ;
 }
 
 Matrix* construct_affine_template_of_coordinate(Vertex3D v) {
