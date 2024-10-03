@@ -1,8 +1,9 @@
-#include "STL_Handler.h"
-#include "stdlib.h"
-
 #ifndef B4C99C2D_6485_49E3_BD9F_9832BAA92C80
 #define B4C99C2D_6485_49E3_BD9F_9832BAA92C80
+
+#include "STL_Handler.h"
+#include "stdlib.h"
+#include "Lighting.h"
 
 typedef struct {
     Vertex3D* location;
@@ -20,6 +21,8 @@ typedef struct {
     Camera* camera;
     GameObject** objects;
     size_t num_models;
+    LightSource** light_sources;
+    size_t num_lights;
 } Scene;
 
 typedef struct {
@@ -35,7 +38,7 @@ typedef struct {
     ZBuffer* z_buffer;
 } Image2D;
 
-Scene* build_scene_struct(Camera* camera, GameObject** objects, size_t num_models);
+Scene* build_scene_struct(Camera* camera, GameObject** objects, size_t num_models, LightSource** light_sources, size_t num_lights);
 void destroy_scene_recursively(Scene* scene);
 
 Camera* build_camera_struct(Vertex3D* point, double x, double y, double z, double fov);

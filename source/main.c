@@ -11,6 +11,84 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+void bresenhams_line_algorithm(Uint32* framebuffer, int w, int h, Vertex2D* v1, Vertex2D* v2, Uint32 pixel) {
+    int x1 = round(v1->x);
+    int y1 = round(v1->y);
+    int x2 = round(v2->x);
+    int y2 = round(v2->y);
+    
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = (x1 < x2) ? 1 : -1;
+    int sy = (y1 < y2) ? 1 : -1;
+    
+    int err = dx - dy;
+    
+    while (true) {
+        int i = y1 * w + x1;
+        if (i >= 0 && i < w * h) {
+            framebuffer[i] = pixel;
+        }
+
+        // Break if we've reached the end point
+        if (x1 == x2 && y1 == y2) {
+            break;
+        }
+
+        int e2 = 2 * err;
+        if (e2 > -dy) {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y1 += sy;
+        }
+    }
+}
+
+Uint32 calculate_light_intensity() {}
+
+void flood_fill(Uint32* framebuffer, int w, int h, int x, int y, Uint32 marker, Uint32 fill_color) {
+    int* indexes = malloc(sizeof(int) * 1000);
+    indexes[0] = w*y + x;
+    int len = 1;
+    int stack_size = 1000;
+    int i = 0;
+
+    while (i < len) {
+        x = indexes[i] % w;
+        y = (indexes[i] - x) / w;
+        i++;
+
+        if (x < 0 || x >= w || y < 0 || y >= h) {
+            continue;
+        }
+        
+        if (framebuffer[y * w + x] == marker || framebuffer[y * w + x] == fill_color) {
+            continue;
+        }
+
+        framebuffer[indexes[i-1]] = fill_color;
+
+        len += 4;
+        if (len > stack_size) {
+            stack_size *= 2;
+            indexes = realloc(indexes, sizeof(int)*stack_size);
+        }
+
+        indexes[len-4] = w*(y) + (x + 1);
+        indexes[len-3] = w*(y) + (x - 1);
+        indexes[len-2] = w*(y + 1) + (x);
+        indexes[len-1] = w*(y - 1) + (x);
+    }
+
+    free(indexes);
+}
+
+
+
+
 int main(int argc, char* argv[]) {
     int w = 800, h = 600;
 
@@ -55,9 +133,9 @@ int main(int argc, char* argv[]) {
     Model* m = build_model_struct(file);
     fclose(file);
     GameObject* object = build_gameobject(build_vertex3D_struct(0, 0, 0), m);
-    object->rotation[0] = 0;//3.14/10;//3.14/6;
+    object->rotation[0] = 3.14/4;//3.14/10;//3.14/6;
     object->rotation[1] = 0;//3.14/6;
-    object->rotation[2] = 0;//.3;//3.14/6;
+    object->rotation[2] = 3.14/4;//.3;//3.14/6;
 
     // List of pointers to each GameObject, will get free'd when we call destroy_scene_recursively()
     GameObject** objects = malloc(sizeof(GameObject*));
@@ -65,7 +143,7 @@ int main(int argc, char* argv[]) {
 
     // Construct a scene from these
     puts("Building scene");
-    Vertex3D* p = build_vertex3D_struct(10, 30, -130);
+    Vertex3D* p = build_vertex3D_struct(0, 70, -250);
     Camera* camera = build_camera_struct(p, -.3, 0, 0, 60);
     Scene* scene = build_scene_struct(camera, objects, 1);
     puts("Building scene 1");
@@ -96,7 +174,7 @@ int main(int argc, char* argv[]) {
 
         // Update scene
         // [IN DEVELOPMENT - NOT IMPLEMENTED YET]
-        //object->rotation[1] += .05;
+        object->rotation[1] += .2*deltaTime;
         //camera->point->x = 100*cos(camera_theta);
         //camera->point->z = 100*sin(camera_theta);
         //camera->rotation[1] = camera_theta;
@@ -106,7 +184,6 @@ int main(int argc, char* argv[]) {
         Matrix* projection_matrix = generate_perspective_projection_matrix(60, w, h);
         size_t current_vertex = 0;
         for (int i = 0; i < scene->num_models; i++) {
-            
             // Find total delta (translation, rotation, etc. to go from model space into world space and then with respect to the camera)
             double dx = -scene->camera->point->x;
             double dy = -scene->camera->point->y;
@@ -151,47 +228,29 @@ int main(int argc, char* argv[]) {
         }
         destroy_matrix(projection_matrix);
 
-        for (int i = 0; i < h*w; i++) {
-            int x = i % w;
-            int y = (i - x) / w;
-            
-            x = x;
-            y = y;
-            bool flag = false;
-            for (int j = 0; j < image_buffer->vertex_count; j++) {
-                double dx = image_buffer->vertices[j]->x - x;
-                double dy = image_buffer->vertices[j]->y - y;
-                if (dx*dx + dy*dy < 10)
-                    flag = true;
-            }
-            for (int j = 0; j < image_buffer->triangle_count; j++) {
-                Vertex2D v1 = *image_buffer->vertices[image_buffer->triangles[j]->indices[0]];
-                Vertex2D v2 = *image_buffer->vertices[image_buffer->triangles[j]->indices[1]];
-                Vertex2D v3 = *image_buffer->vertices[image_buffer->triangles[j]->indices[2]];
 
-                double m1 = (v1.y - v2.y) / (v1.x - v2.x);
-                double b1 = v1.y - m1*v1.x;
-                double dy = y - (x*m1 + b1);
-                if (dy*dy < 2 && ((x < v1.x && x > v2.x) || (x > v1.x && x < v2.x)))
-                    flag = true;
-                
-                double m11 = (v1.y - v3.y) / (v1.x - v3.x);
-                double b11 = v1.y - m11*v1.x;
-                double dy1 = y - (x*m11 + b11);
-                if (dy1*dy1 < 2 && ((x < v1.x && x > v3.x) || (x > v1.x && x < v3.x)))
-                    flag = true;
-
-                double m111 = (v3.y - v2.y) / (v3.x - v2.x);
-                double b111 = v3.y - m111*v3.x;
-                double dy11 = y - (x*m111 + b111);
-                if (dy11*dy11 < 2 && ((x < v3.x && x > v2.x) || (x > v3.x && x < v2.x)))
-                    flag = true;
-            }
-
+        for (int i = 0; i < w*h; i++) {
             framebuffer[i] = SDL_MapRGBA(format, 255, 255, 255, 255);
-            if (flag)
-                framebuffer[i] = SDL_MapRGBA(format, 0, 0, 0, 255);
         }
+
+        for (int i = 0; i < image_buffer->triangle_count; i++) { // image_buffer->triangle_count
+            Vertex2D* v1 = image_buffer->vertices[image_buffer->triangles[i]->indices[0]];
+            Vertex2D* v2 = image_buffer->vertices[image_buffer->triangles[i]->indices[1]];
+            Vertex2D* v3 = image_buffer->vertices[image_buffer->triangles[i]->indices[2]];
+
+            Uint32 marker_color = SDL_MapRGBA(format,i, 128, 128, 255);
+            Uint32 fill_color = SDL_MapRGBA(format, i, 128, 128, 255);
+
+            int x_start = (v1->x + v2->x + v3->x) / 3;
+            int y_start = (v1->y + v2->y + v3->y) / 3;
+
+            bresenhams_line_algorithm(framebuffer, w, h, v1, v2, marker_color);
+            bresenhams_line_algorithm(framebuffer, w, h, v1, v3, marker_color);
+            bresenhams_line_algorithm(framebuffer, w, h, v2, v3, marker_color);
+            flood_fill(framebuffer, w, h, x_start, y_start, marker_color, fill_color);
+        }
+
+        
 
         // Perform clipping
         // [IN DEVELOPMENT - NOT IMPLEMENTED YET]

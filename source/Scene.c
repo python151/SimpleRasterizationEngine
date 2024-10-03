@@ -1,16 +1,21 @@
 #include "Scene.h"
 
-Scene* build_scene_struct(Camera* camera, GameObject** objects, size_t num_models) {
+Scene* build_scene_struct(Camera* camera, GameObject** objects, size_t num_models, LightSource** light_sources, size_t num_lights) {
     Scene* scene = malloc(sizeof(Scene));
     scene->camera = camera;
     scene->objects = objects;
     scene->num_models = num_models;
+    scene->light_sources = light_sources;
+    scene->num_lights = num_lights;
     return scene;
 }
 void destroy_scene_recursively(Scene* scene) {
     destroy_camera_struct(scene->camera);
     for (int m = 0; m < scene->num_models; m++) {
         destroy_gameobject_struct(scene->objects[m]);
+    }
+    for (int l = 0; l < scene->num_lights; l++) {
+        destroy_l
     }
     free(scene->objects);
     free(scene);

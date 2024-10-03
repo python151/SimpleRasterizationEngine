@@ -58,7 +58,7 @@ bool vertex_3d_isequal(Vertex3D v1, Vertex3D v2) {
     return (v1.x == v2.x) && (v1.y = v2.y) && (v1.z == v2.z);
 }
 bool vertex_3d_raw_isequal(Vertex3D v1, double x, double y, double z) {
-    return (v1.x - x < .0001) && (v1.y - y < .0001) && (v1.z - z < .0001);
+    return ((v1.x - x)*(v1.x - x) < .0001) && ((v1.y - y)*(v1.y - y) < .0001) && ((v1.z - z)*(v1.z - z) < .0001);
 }
 
 void build_triangle(FILE* file, char line_buffer[250], Model* current_model) {
@@ -94,9 +94,11 @@ void build_triangle(FILE* file, char line_buffer[250], Model* current_model) {
         Vertex3D v = *current_model->vertices[i];
         if (vertex_3d_raw_isequal(v, x1, y1, z1)) {
             indices[0] = i;
-        } else if (vertex_3d_raw_isequal(v, x2, y2, z2)) {
+        }
+        else if (vertex_3d_raw_isequal(v, x2, y2, z2)) {
             indices[1] = i;
-        } else if (vertex_3d_raw_isequal(v, x3, y3, z3)) {
+        } 
+        else if (vertex_3d_raw_isequal(v, x3, y3, z3)) {
             indices[2] = i;
         }
     }

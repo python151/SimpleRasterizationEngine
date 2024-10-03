@@ -29,7 +29,7 @@ Matrix* construct_translation_matrix(double dx, double dy, double dz) {
     return m;
 }
 Matrix* construct_rotation_matrix(double theta_x, double theta_y, double theta_z) {
-    // TODO: IMPLEMENT THIS, THIS IS JUST A PLACEHOLDER
+    // This is implemented now, apperantly
     Matrix* mat_x =  construct_translation_matrix(0, 0, 0);
     mat_x->values[5] = cos(theta_x);
     mat_x->values[6] = sin(theta_x);
